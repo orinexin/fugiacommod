@@ -1,0 +1,12 @@
+<my-custom-element></my-custom-element>
+<script>
+    class MyCustomElement extends HTMLElement {
+        constructor() {
+            super();
+            this.attachShadow({ mode: 'open' });
+            this.shadowRoot.innerHTML = `<p>Hello from custom element!</p>`;
+        }
+    }
+
+    customElements.define('my-custom-element', MyCustomElement);
+</script>
