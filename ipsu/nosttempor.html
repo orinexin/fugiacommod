@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Custom Scale with Grid Alignment</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+</head>
+<body>
+    <svg width="600" height="400"></svg>
+    <script>
+        // Define SVG dimensions
+        const svgWidth = 600;
+        const svgHeight = 400;
+        
+        // Append SVG element
+        const svg = d3.select("svg")
+            .attr("width", svgWidth)
+            .attr("height", svgHeight);
+        
+        // Define margins and dimensions for the chart area
+        const margin = { top: 20, right: 30, bottom: 30, left: 40 };
+        const width = svgWidth - margin.left - margin.right;
+        const height = svgHeight - margin.top - margin.bottom;
+        
+        // Append a group element for the chart
+        const g = svg.append("g")
+            .attr("transform", `translate(${margin.left},${margin.top})`);
+        
+        // Define scales
+        const xScale = scale.symlogish;
+        const yScale = scale.symlogish;
+
+        // Define the axes
+        const xAxis = d3.axisBottom(xScale);
+        const yAxis = d3.axisLeft(yScale);
+
+        // Append the x-axis
+        g.append("g")
+            .attr("class", "x axis")
+            .attr("transform", `translate(0,${height})`)
+            .call(xAxis);
+
+        // Append the y-axis
+        g.append("g")
+            .attr("class", "y axis")
+            .call(yAxis);
+
+        // Append grid lines
+        g.append("g")
+            .attr("class", "grid")
+            .selectAll("line")
+            .data(xScale.ticks())
+            .enter()
+            .append("line")
+            .attr("x1", d => xScale(d))
+            .attr("x2", d => xScale(d))
+            .attr("y1", 0)
+            .attr("y2", height)
+            .attr("stroke", "#ccc");
+
+        g.append("g")
+            .attr("class", "grid")
+            .selectAll("line")
+            .data(yScale.ticks())
+            .enter()
+            .append("line")
+            .attr("x1", 0)
+            .attr("x2", width)
+            .attr("y1", d => yScale(d))
+            .attr("y2", d => yScale(d))
+            .attr("stroke", "#ccc");
+    </script>
+</body>
+</html>
